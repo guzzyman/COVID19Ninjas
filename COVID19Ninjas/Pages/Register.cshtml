@@ -486,18 +486,16 @@
 
                 // Get the base API URI
                 let baseUrl = "https://crisisreliefapi.azurewebsites.net/api/Users/CreateUser";
-                let data = appData.user;
+                let data = JSON.stringify(appData.user);
 
                 console.log(appData.user);
                 // Make Ajax call here
                 $.ajax({
                     url: baseUrl,
                     type: 'POST',
+                    dataType : "json",
+                    contentType: "application/json; charset=utf-8",
                     data: data,
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'text/plain'
-                    },
                     success: function (response) {
                         debugger
                         alert('Form Submitted Successfully!');
