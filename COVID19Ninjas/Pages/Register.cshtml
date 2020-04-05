@@ -235,9 +235,9 @@
                                                 <h6>Thank you for taking out time to fill this form</h6>
                                                 <p>
                                                 <p>
-                                                    Should you decide to key into the Covid-19 stimulus package, you may logon into
+                                                    Should you decide to key into the Covid-19 stimulus package, you may login to
                                                     your profile to continue. Kindly remember your safety and the safety of others
-                                                    in whatever you do. <br><strong>#StayHome, #KeepSocialDistance</strong>.
+                                                    in whatever you do. <p><strong>#StayHome, #KeepSocialDistance</strong>.
                                                 </p>
                                             </div>
                                         </div>
@@ -570,16 +570,8 @@
                 dataType: "json",
                 data: data,
                 success: function (response) {
-                    debugger
-                    alert('Form Submitted Successfully!');
-                    console.log(response);
                     $("#EmploymentInformation").hide();
                     $("#IndemnityAgreement").show();
-                    // if (response.Result == "OK") {
-
-                    // }
-                    // else {
-                    // }
                 },
                 error: function (returnval) {
                     console.log("Na error be this o...!!!");
