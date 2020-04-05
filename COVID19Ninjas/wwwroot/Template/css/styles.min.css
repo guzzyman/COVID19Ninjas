@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
@@ -16553,7 +16553,7 @@ section.section {
 @media only screen and (min-width:992px) {
 	.promo-primary--elements .align-container,
 	.promo-primary--shop .align-container {
-		height: 530px
+		height: 450px
 	}
 }
 
@@ -20076,7 +20076,7 @@ header.header--intro .button {
 
 @media only screen and (min-width:1367px) {
 	.promo-pannel {
-		max-width: 955px
+		max-width: 300px
 	}
 }
 
