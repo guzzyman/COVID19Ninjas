@@ -114,8 +114,8 @@
                                             <div class="col-lg-6">
                                                 <select class="form__select" id="areYouCurrentlyInEmployment">
                                                     <option>Are you currently employed?</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
+                                                    <option value="true">Yes</option>
+                                                    <option value="false">No</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-6">
@@ -159,15 +159,15 @@
                                             <div class="col-lg-6">
                                                 <select class="form__select" id="ownBusinessAlone">
                                                     <option>Do you own this business alone?</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
+                                                    <option value="true">Yes</option>
+                                                    <option value="false">No</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-6">
                                                 <select class="form__select" id="businessStillOperational">
                                                     <option>Is business still operational?</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
+                                                    <option value="true">Yes</option>
+                                                    <option value="false">No</option>
                                                 </select>
                                             </div>
                                             <div class="col-lg-6">
@@ -281,27 +281,23 @@
 
     <script>
         let appData = {};
+        let option = $("#IsEmploymentStatus");
         $(document).ready(function () {
-            // Initialize all the variables
+            // Assign values to the appData Object
             appData = {
-                step: 1,
-                totalSteps: 3,
-                errors: null,
-                IsEmploymentStatus: null,
-                thankyouStep: 0,
                 salaryWorkers: {
                     salaryWorkersDetaildId: 0,
                     userId: 0,
                     activeEmail: null,
                     activePhoneNumber: null,
-                    areYouCurrentlyInEmployment: null,
+                    areYouCurrentlyInEmployment: true,
                     employerName: null,
                     employerIndustry: null,
                     employerRcNoOrBrNo: null,
-                    dateOfEmployment: null,
-                    dateOfLeaving: null,
+                    dateOfEmployment: "2020-04-05T00:07:28.870Z",
+                    dateOfLeaving: "2020-04-05T00:07:28.870Z",
                     avgMonthlySalaryForSixMonths: null,
-                    createdOn: null
+                    createdOn: "2020-04-05T00:07:28.870Z"
                 },
                 selfEmployedWorkers: {
                     selfEmployedWorkersDetailsId: 0,
@@ -312,13 +308,13 @@
                     industry: null,
                     businessDescription: null,
                     businessRcNoOrBrNo: null,
-                    ownBusinessAlone: null,
-                    businessStillOperational: null,
-                    startDateOfBusiness: null,
-                    closeDateOfBusiness: null,
-                    dateOfLeaving: null,
+                    ownBusinessAlone: true,
+                    businessStillOperational: true,
+                    startDateOfBusiness: "2020-04-05T00:07:28.870Z",
+                    closeDateOfBusiness: "2020-04-05T00:07:28.870Z",
+                    dateOfLeaving: "2020-04-05T00:07:28.870Z",
                     avgMonthlySalaryForSixMonths: null,
-                    createdOn: null
+                    createdOn: "2020-04-05T00:07:28.870Z"
                 },
                 bvnDetail: {
                     bvndetailsId: 0,
@@ -326,8 +322,8 @@
                     firstName: null,
                     middleName: null,
                     lastName: null,
-                    dateOfBirth: null,
-                    registrationDate: null,
+                    dateOfBirth: "2020-04-05T00:16:02.020Z",
+                    registrationDate: "2020-04-05T00:16:02.020Z",
                     enrollmentBank: null,
                     email: null,
                     phoneNumber: null,
@@ -340,7 +336,15 @@
                     stateOfOrigin: null,
                     stateOfResidence: null,
                     watchListed: null,
-                    createdOn: null
+                    createdOn: "2020-04-05T00:16:02.020Z"
+                },
+                salarydetail: {
+                    salaryDetailsId: 0,
+                    userId: 0,
+                    month: 0,
+                    year: 0,
+                    salaryAmount: 0,
+                    createdOn: "2020-04-05T00:16:02.020Z"
                 },
                 user: {
                     firstName: null,
@@ -362,18 +366,22 @@
                     documentIdNumber: null,
                     spouseUniqueNumber: 0,
                     bvndetails: [],
+                    salaryDetails: [],
                     salaryWorkersDetails: [],
                     selfEmployedWorkersDetails: [],
                 }
             }
-
+            // Initialize some variables
+            appData.user.salaryWorkersDetails = [];
+            appData.user.salaryDetails = [];
+            appData.user.bvndetails = [];
+            appData.user.selfEmployedWorkersDetails = [];
             // Get the createdon date
             var date = Date.now();
-            const formatedDate = dayjs(date).format("YYYY-MM-DD")
+            const formatedDate = dayjs(date).format("YYYY-MM-DD");
 
-            appData.user.createdOn = formatedDate;
-
-            $("#gotoStep2").on('click', function () {debugger
+            $("#gotoStep2").on('click', function () {
+                debugger
                 // Get the field variables
                 appData.user.firstName = $("#firstName").val();
                 appData.user.middleName = $("#middleName").val();
@@ -386,8 +394,9 @@
                 appData.user.identityDocumentType = $("#identityDocumentType").val();
                 appData.user.documentIdNumber = $("#documentIdNumber").val();
                 appData.user.spouseUniqueNumber = $("#spouseUniqueNumber").val();
+                appData.user.createdOn = formatedDate;
+                appData.user.createdBy = appData.user.firstName + " " + appData.user.lastName;
 
-                console.log(appData.user);
                 // Validate the form fields
 
                 // Proceed to step 2
@@ -402,11 +411,13 @@
             });
 
             $("#IsEmploymentStatus").on('change', function () {
-                let option = $("#IsEmploymentStatus");
+                option = $("#IsEmploymentStatus");
                 if (option.val() == "Yes") {
                     $("#selfEmployedWorkersDetails").hide();
                     $("#salaryWorkersDetails").show();
                     $("#empCategory").html("(salary worker)");
+                    $("#areYouCurrentlyInEmployment option:selected").val("true");
+                    $("#areYouCurrentlyInEmployment option:selected").text("Yes");
                 }
                 else {
                     $("#salaryWorkersDetails").hide();
@@ -416,47 +427,93 @@
             });
 
             $("#gotoStep3").on('click', function () {
+
+                // Get the contents of the form fields based on the condition below
+                option = $("#IsEmploymentStatus");
+                if (option.val() == "Yes") {
+                    debugger
+
+                    appData.salaryWorkers.activeEmail = $("#activeEmail").val();
+                    appData.salaryWorkers.activePhoneNumber = $("#activePhoneNumber").val();
+                    appData.salaryWorkers.areYouCurrentlyInEmployment = $("#areYouCurrentlyInEmployment option:selected").val();
+                    appData.salaryWorkers.employerName = $("#employerName").val();
+                    appData.salaryWorkers.employerIndustry = $("#employerIndustry").val();
+                    appData.salaryWorkers.employerRcNoOrBrNo = $("#employerRcNoOrBrNo").val();
+                    appData.salaryWorkers.dateOfEmployment = $("#dateOfEmployment").val();
+                    appData.salaryWorkers.dateOfLeaving = $("#dateOfLeaving").val();
+                    appData.salaryWorkers.avgMonthlySalaryForSixMonths = $("#avgMonthlySalaryForSixMonths").val();
+                    appData.salaryWorkers.createdOn = formatedDate;
+
+                    // Push the salaryWorkerDetails into the salaryWorkersDetails array
+                    appData.user.salaryWorkersDetails.push(appData.salaryWorkers);
+
+                    // Push the salary detail into the salraydetails array
+                    appData.user.salaryDetails.push(appData.salarydetail);
+
+                    // Push teh bvnDetails into the bvndetails array
+                    appData.user.bvndetails.push(appData.bvnDetail);
+                    appData.user.selfEmployedWorkersDetails.push(appData.selfEmployedWorkers);
+                }
+                else {
+
+                    appData.selfEmployedWorkers.activeResidentialAddress = $("#activeResidentialAddress").val();
+                    appData.selfEmployedWorkers.activePhoneNumber = $("#activePhoneNumber").val();
+                    appData.selfEmployedWorkers.nameOfBusiness = $("#nameOfBusiness").val();
+                    appData.selfEmployedWorkers.industry = $("#industry").val();
+                    appData.selfEmployedWorkers.businessDescription = $("#businessDescription").val();
+                    appData.selfEmployedWorkers.businessRcNoOrBrNo = $("#businessRcNoOrBrNo").val();
+                    appData.selfEmployedWorkers.ownBusinessAlone = $("#ownBusinessAlone option:selected").val();
+                    appData.selfEmployedWorkers.businessStillOperational = $("#businessStillOperational option:selected").val();
+                    appData.selfEmployedWorkers.startDateOfBusiness = $("#startDateOfBusiness").val();
+                    appData.selfEmployedWorkers.closeDateOfBusiness = $("#closeDateOfBusiness").val();
+                    appData.selfEmployedWorkers.dateOfLeaving = $("#dateOfLeaving").val();
+                    appData.selfEmployedWorkers.avgMonthlySalaryForSixMonths = $("#avgMonthlySalaryForSixMonths").val();
+                    appData.selfEmployedWorkers.createdOn = formatedDate;
+
+                    // Push the salaryWorkerDetails into the salaryWorkersDetails array
+                    appData.user.selfEmployedWorkersDetails.push(appData.selfEmployedWorkers);
+
+                    // Push the salary detail into the salraydetails array
+                    appData.user.salaryDetails.push(appData.salarydetail);
+
+                    // Push teh bvnDetails into the bvndetails array
+                    appData.user.bvndetails.push(appData.bvnDetail);
+                    appData.user.salaryWorkersDetails.push(appData.salaryWorkers);
+                }
+
                 // Validate the form fields
+                // To be done later
 
-                //// Makes Ajax call
-                //let s = this.salaryWorkers;
-                //console.log(s);
-                //let e = this.selfEmployedWorkers;
-                //console.log(e);
-                //console.log(this.IsEmploymentStatus);
+                // Get the base API URI
+                let baseUrl = "https://crisisreliefapi.azurewebsites.net/api/Users/CreateUser";
+                let data = appData.user;
 
-                //// Prepare the data that needs to be submitted.
-                //if (this.IsEmploymentStatus == true) {
-                //    this.user.salaryWorkersDetails = [];
-                //    this.user.salaryWorkersDetails.push(s);
-                //} else {
-                //    this.user.selfEmployedWorkersDetails = [];
-                //    this.user.selfEmployedWorkersDetails.push(e);
-                //}
+                console.log(appData.user);
+                // Make Ajax call here
+                $.ajax({
+                    url: baseUrl,
+                    type: 'POST',
+                    data: data,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'text/plain'
+                    },
+                    success: function (response) {
+                        debugger
+                        alert('Form Submitted Successfully!');
+                        console.log(response);
+                        $("#EmploymentInformation").hide();
+                        $("#IndemnityAgreement").show();
+                        // if (response.Result == "OK") {
 
-                //// Get the base API URI
-                //let baseUrl = "https://crisisreliefapi.azurewebsites.net/api/Users/CreateUser";
-
-                //console.log(this.user);
-                //// Make Ajax call here
-                //alert('Form Submitted Successfully!');
-                //$.ajax({
-                //    url: baseUrl,
-                //    type: 'POST',
-                //    data: this.user,
-                //    success: function (response) {
-                //        debugger
-                //        console.log(response);
-                //        // if (response.Result == "OK") {
-
-                //        // }
-                //        // else {
-                //        // }
-                //    },
-                //    error: function (returnval) {
-                //        console.log("Na error be this o...!!!");
-                //    }
-                //});
+                        // }
+                        // else {
+                        // }
+                    },
+                    error: function (returnval) {
+                        console.log("Na error be this o...!!!");
+                    }
+                });
             });
 
             $("#sendEmailActivationLink").on('click', function () {
@@ -465,6 +522,8 @@
 
             $("#gotoStep4").on('click', function () {
                 // ThankyouPage
+                $("#IndemnityAgreement").hide();
+                $("#ThankyouPage").show();
             });
         });
     </script>
