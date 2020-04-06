@@ -51,13 +51,8 @@
                                             <input class="form__field" type="email" id="email" placeholder="Email Address *" />
                                         </div>
                                         <div class="col-lg-6">
-                                            <select class="form__select" id="bankId">
+                                            <select class="nice-select form__select" id="bankId">
                                                 <option>Bank</option>
-                                                <option value="1">Bank 1</option>
-                                                <option value="2">Bank 2</option>
-                                                <option value="3">Bank 3</option>
-                                                <option value="4">Bank 4</option>
-                                                <option value="5">Bank 5</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
@@ -66,11 +61,6 @@
                                         <div class="col-lg-6">
                                             <select class="form__select" id="stateId">
                                                 <option>State</option>
-                                                <option value="1">State 1</option>
-                                                <option value="2">State 2</option>
-                                                <option value="3">State 3</option>
-                                                <option value="4">State 4</option>
-                                                <option value="5">State 5</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-6">
@@ -109,7 +99,7 @@
                                                 <input class="form__field" type="text" id="activeEmail" placeholder="Active Email" />
                                             </div>
                                             <div class="col-lg-6">
-                                                <input class="form__field" type="text" id="activePhoneNumber" placeholder="Active PhoneNumber" />
+                                                <input class="form__field" type="text" id="activePhoneNumber1" placeholder="Active PhoneNumber" />
                                             </div>
                                             <div class="col-lg-6">
                                                 <select class="form__select" id="areYouCurrentlyInEmployment">
@@ -131,10 +121,10 @@
                                                 <input class="form__field" type="text" id="dateOfEmployment" placeholder="Date of Employment" />
                                             </div>
                                             <div class="col-lg-6">
-                                                <input class="form__field" type="text" id="dateOfLeaving" placeholder="Date of leaving" />
+                                                <input class="form__field" type="text" id="dateOfLeaving1" placeholder="Date of leaving" />
                                             </div>
                                             <div class="col-lg-6">
-                                                <input class="form__field" type="text" id="avgMonthlySalaryForSixMonths" placeholder="Avg. 6 Months Salary" />
+                                                <input class="form__field" type="text" id="avgMonthlySalaryForSixMonths1" placeholder="Avg. 6 Months Salary" />
                                             </div>
                                         </div>
                                         <div id="selfEmployedWorkersDetails" class="row" style="padding:15px !important; display: none">
@@ -245,9 +235,9 @@
                                                 <h6>Thank you for taking out time to fill this form</h6>
                                                 <p>
                                                 <p>
-                                                    Should you decide to key into the Covid-19 stimulus package, you may logon into
+                                                    Should you decide to key into the Covid-19 stimulus package, you may login to
                                                     your profile to continue. Kindly remember your safety and the safety of others
-                                                    in whatever you do. <br><strong>#StayHome, #KeepSocialDistance</strong>.
+                                                    in whatever you do. <p><strong>#StayHome, #KeepSocialDistance</strong>.
                                                 </p>
                                             </div>
                                         </div>
@@ -267,14 +257,14 @@
     <!-- section end-->
     <!-- bottom bg start-->
     @*<section class="bottom-background background--brown">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="bottom-background__img"><img src="~/Template/img//bottom-bg.png" alt="img" /></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="bottom-background__img"><img src="~/Template/img//bottom-bg.png" alt="img" /></div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>*@
+        </section>*@
     <!-- bottom bg end-->
 </main>
 @section covidScripts {
@@ -283,59 +273,63 @@
         let appData = {};
         let option = $("#IsEmploymentStatus");
         $(document).ready(function () {
+            // Get all the banks and populate the dropdown list
+            getBanks();
+            // Get all the states and populate the dropdown list
+            getStates();
             // Assign values to the appData Object
             appData = {
                 salaryWorkers: {
                     salaryWorkersDetaildId: 0,
                     userId: 0,
-                    activeEmail: null,
-                    activePhoneNumber: null,
+                    activeEmail: "string",
+                    activePhoneNumber: "string",
                     areYouCurrentlyInEmployment: true,
-                    employerName: null,
-                    employerIndustry: null,
-                    employerRcNoOrBrNo: null,
+                    employerName: "string",
+                    employerIndustry: "string",
+                    employerRcNoOrBrNo: "string",
                     dateOfEmployment: "2020-04-05T00:07:28.870Z",
                     dateOfLeaving: "2020-04-05T00:07:28.870Z",
-                    avgMonthlySalaryForSixMonths: null,
+                    avgMonthlySalaryForSixMonths: "string",
                     createdOn: "2020-04-05T00:07:28.870Z"
                 },
                 selfEmployedWorkers: {
                     selfEmployedWorkersDetailsId: 0,
                     userId: 0,
-                    activeResidentialAddress: null,
-                    activePhoneNumber: null,
-                    nameOfBusiness: null,
-                    industry: null,
-                    businessDescription: null,
-                    businessRcNoOrBrNo: null,
+                    activeResidentialAddress: "string",
+                    activePhoneNumber: "string",
+                    nameOfBusiness: "string",
+                    industry: "string",
+                    businessDescription: "string",
+                    businessRcNoOrBrNo: "string",
                     ownBusinessAlone: true,
                     businessStillOperational: true,
                     startDateOfBusiness: "2020-04-05T00:07:28.870Z",
                     closeDateOfBusiness: "2020-04-05T00:07:28.870Z",
                     dateOfLeaving: "2020-04-05T00:07:28.870Z",
-                    avgMonthlySalaryForSixMonths: null,
+                    avgMonthlySalaryForSixMonths: "string",
                     createdOn: "2020-04-05T00:07:28.870Z"
                 },
                 bvnDetail: {
                     bvndetailsId: 0,
                     userId: 0,
-                    firstName: null,
-                    middleName: null,
-                    lastName: null,
+                    firstName: "string",
+                    middleName: "string",
+                    lastName: "string",
                     dateOfBirth: "2020-04-05T00:16:02.020Z",
                     registrationDate: "2020-04-05T00:16:02.020Z",
-                    enrollmentBank: null,
-                    email: null,
-                    phoneNumber: null,
-                    gender: null,
-                    lgaofOrigin: null,
-                    lgaofResidence: null,
-                    nationality: null,
-                    phoneNumberAlt: null,
-                    residentialAddress: null,
-                    stateOfOrigin: null,
-                    stateOfResidence: null,
-                    watchListed: null,
+                    enrollmentBank: "string",
+                    email: "string",
+                    phoneNumber: "string",
+                    gender: "string",
+                    lgaofOrigin: "string",
+                    lgaofResidence: "string",
+                    nationality: "string",
+                    phoneNumberAlt: "string",
+                    residentialAddress: "string",
+                    stateOfOrigin: "string",
+                    stateOfResidence: "string",
+                    watchListed: "string",
                     createdOn: "2020-04-05T00:16:02.020Z"
                 },
                 salarydetail: {
@@ -347,23 +341,23 @@
                     createdOn: "2020-04-05T00:16:02.020Z"
                 },
                 user: {
-                    firstName: null,
-                    middleName: null,
-                    lastName: null,
-                    bvn: null,
+                    firstName: "string",
+                    middleName: "string",
+                    lastName: "string",
+                    bvn: "string",
                     bvnIsValidated: true,
-                    email: null,
+                    email: "string",
                     emailIsValidated: true,
-                    phoneNumber: null,
+                    phoneNumber: "string",
                     phoneNumberIsValidated: true,
-                    accountNumber: null,
+                    accountNumber: "string",
                     accountNumberIsValidated: true,
-                    bankId: null,
-                    stateId: null,
-                    createdOn: null,
-                    createdBy: null,
-                    identityDocumentType: null,
-                    documentIdNumber: null,
+                    bankId: "string",
+                    stateId: "string",
+                    createdOn: "string",
+                    createdBy: "string",
+                    identityDocumentType: "string",
+                    documentIdNumber: "string",
                     spouseUniqueNumber: 0,
                     bvndetails: [],
                     salaryDetails: [],
@@ -381,7 +375,7 @@
             const formatedDate = dayjs(date).format("YYYY-MM-DD");
 
             $("#gotoStep2").on('click', function () {
-                debugger
+
                 // Get the field variables
                 appData.user.firstName = $("#firstName").val();
                 appData.user.middleName = $("#middleName").val();
@@ -398,10 +392,27 @@
                 appData.user.createdBy = appData.user.firstName + " " + appData.user.lastName;
 
                 // Validate the form fields
+                let isValid = true;
+                $('#firstName, #middleName, #lastName, #email, #phoneNumber, #accountNumber, #documentIdNumber, #spouseUniqueNumber').each(function () {
+                    if ($.trim($(this).val()) == '') {
+                        isValid = false;
+                        $(this).css({
+                            "border": "1px solid red",
+                            "background": "#FFFFFF"
+                        });
+                    } else {
+                        $(this).css({
+                            "border": "",
+                            "background": ""
+                        });
+                    }
+                });
 
-                // Proceed to step 2
-                $("#PersonalInformation").hide();
-                $("#EmploymentInformation").show();
+                if (isValid) {
+                    // Proceed to step 2
+                    $("#PersonalInformation").hide();
+                    $("#EmploymentInformation").show();
+                }
             });
 
             $("#backToStep1").on('click', function () {
@@ -413,6 +424,11 @@
             $("#IsEmploymentStatus").on('change', function () {
                 option = $("#IsEmploymentStatus");
                 if (option.val() == "Yes") {
+
+                    $('#activeResidentialAddress, #activePhoneNumber, #nameOfBusiness, #industry, #businessDescription, #businessRcNoOrBrNo, #startDateOfBusiness, #closeDateOfBusiness, #dateOfLeaving, #avgMonthlySalaryForSixMonths').each(function () {
+                        $(this).val('');
+                    });
+
                     $("#selfEmployedWorkersDetails").hide();
                     $("#salaryWorkersDetails").show();
                     $("#empCategory").html("(salary worker)");
@@ -420,6 +436,11 @@
                     $("#areYouCurrentlyInEmployment option:selected").text("Yes");
                 }
                 else {
+
+                    $('#activeEmail, #activePhoneNumber1, #employerName, #employerIndustry, #employerRcNoOrBrNo, #dateOfEmployment, #dateOfLeaving1, #avgMonthlySalaryForSixMonths1').each(function () {
+                        $(this).val('');
+                    });
+
                     $("#salaryWorkersDetails").hide();
                     $("#selfEmployedWorkersDetails").show();
                     $("#empCategory").html("(self-employed worker)");
@@ -431,18 +452,34 @@
                 // Get the contents of the form fields based on the condition below
                 option = $("#IsEmploymentStatus");
                 if (option.val() == "Yes") {
-                    debugger
 
                     appData.salaryWorkers.activeEmail = $("#activeEmail").val();
-                    appData.salaryWorkers.activePhoneNumber = $("#activePhoneNumber").val();
+                    appData.salaryWorkers.activePhoneNumber = $("#activePhoneNumber1").val();
                     appData.salaryWorkers.areYouCurrentlyInEmployment = $("#areYouCurrentlyInEmployment option:selected").val();
                     appData.salaryWorkers.employerName = $("#employerName").val();
                     appData.salaryWorkers.employerIndustry = $("#employerIndustry").val();
                     appData.salaryWorkers.employerRcNoOrBrNo = $("#employerRcNoOrBrNo").val();
                     appData.salaryWorkers.dateOfEmployment = $("#dateOfEmployment").val();
-                    appData.salaryWorkers.dateOfLeaving = $("#dateOfLeaving").val();
-                    appData.salaryWorkers.avgMonthlySalaryForSixMonths = $("#avgMonthlySalaryForSixMonths").val();
+                    appData.salaryWorkers.dateOfLeaving = $("#dateOfLeaving1").val();
+                    appData.salaryWorkers.avgMonthlySalaryForSixMonths = $("#avgMonthlySalaryForSixMonths1").val();
                     appData.salaryWorkers.createdOn = formatedDate;
+
+                    // Validate the form fields
+                    let isValid = true;
+                    $('#activeEmail, #activePhoneNumber1, #employerName, #employerIndustry, #employerRcNoOrBrNo, #dateOfEmployment, #dateOfLeaving1, #avgMonthlySalaryForSixMonths1').each(function () {
+                        if ($.trim($(this).val()) == '') {
+                            isValid = false;
+                            $(this).css({
+                                "border": "1px solid red",
+                                "background": "#FFFFFF"
+                            });
+                        } else {
+                            $(this).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    });
 
                     // Push the salaryWorkerDetails into the salaryWorkersDetails array
                     appData.user.salaryWorkersDetails.push(appData.salaryWorkers);
@@ -450,9 +487,14 @@
                     // Push the salary detail into the salraydetails array
                     appData.user.salaryDetails.push(appData.salarydetail);
 
-                    // Push teh bvnDetails into the bvndetails array
+                    // Push the bvnDetails into the bvndetails array
                     appData.user.bvndetails.push(appData.bvnDetail);
                     appData.user.selfEmployedWorkersDetails.push(appData.selfEmployedWorkers);
+
+                    console.log(appData.user);
+                    if (isValid) {
+                        createUser();
+                    }
                 }
                 else {
 
@@ -470,6 +512,23 @@
                     appData.selfEmployedWorkers.avgMonthlySalaryForSixMonths = $("#avgMonthlySalaryForSixMonths").val();
                     appData.selfEmployedWorkers.createdOn = formatedDate;
 
+                    // Validate the form fields
+                    let isValid = true;
+                    $('#activeResidentialAddress, #activePhoneNumber, #nameOfBusiness, #industry, #businessDescription, #businessRcNoOrBrNo, #startDateOfBusiness, #closeDateOfBusiness, #dateOfLeaving, #avgMonthlySalaryForSixMonths').each(function () {
+                        if ($.trim($(this).val()) == '') {
+                            isValid = false;
+                            $(this).css({
+                                "border": "1px solid red",
+                                "background": "#FFFFFF"
+                            });
+                        } else {
+                            $(this).css({
+                                "border": "",
+                                "background": ""
+                            });
+                        }
+                    });
+
                     // Push the salaryWorkerDetails into the salaryWorkersDetails array
                     appData.user.selfEmployedWorkersDetails.push(appData.selfEmployedWorkers);
 
@@ -479,39 +538,12 @@
                     // Push teh bvnDetails into the bvndetails array
                     appData.user.bvndetails.push(appData.bvnDetail);
                     appData.user.salaryWorkersDetails.push(appData.salaryWorkers);
-                }
 
-                // Validate the form fields
-                // To be done later
-
-                // Get the base API URI
-                let baseUrl = "https://crisisreliefapi.azurewebsites.net/api/Users/CreateUser";
-                let data = JSON.stringify(appData.user);
-
-                console.log(appData.user);
-                // Make Ajax call here
-                $.ajax({
-                    url: baseUrl,
-                    type: 'POST',
-                    dataType : "json",
-                    contentType: "application/json; charset=utf-8",
-                    data: data,
-                    success: function (response) {
-                        debugger
-                        alert('Form Submitted Successfully!');
-                        console.log(response);
-                        $("#EmploymentInformation").hide();
-                        $("#IndemnityAgreement").show();
-                        // if (response.Result == "OK") {
-
-                        // }
-                        // else {
-                        // }
-                    },
-                    error: function (returnval) {
-                        console.log("Na error be this o...!!!");
+                    console.log(appData.user);
+                    if (isValid) {
+                        createUser();
                     }
-                });
+                }
             });
 
             $("#sendEmailActivationLink").on('click', function () {
@@ -524,5 +556,76 @@
                 $("#ThankyouPage").show();
             });
         });
+
+        function createUser() {
+            // Get the base API URI
+            let baseUrl = "https://localhost:44382/api/Users/CreateUser";
+            let data = JSON.stringify(appData.user);
+
+            // Make Ajax call here
+            $.ajax({
+                url: baseUrl,
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: data,
+                success: function (response) {
+                    $("#EmploymentInformation").hide();
+                    $("#IndemnityAgreement").show();
+                },
+                error: function (returnval) {
+                    console.log("Na error be this o...!!!");
+                }
+            });
+        }
+
+        function getBanks() {
+            let baseUrl = "https://localhost:44382/api/Banks";
+            $.ajax({
+                url: baseUrl,
+                type: 'GET',
+                dataType: "json",
+                success: function (response) {
+                    let select_div = "";
+                    if (response) {
+                        $.each(response, function (key, value) {
+                            select_div += "<option value='" + value.bankId + "'>" + value.bankName + "</option>";
+                            //"<ul class='list'><li data-value='"+ value.bankId +"' class='option selected focus'>"+ value.bankId +"</li></ul>";
+                        });
+                        $("select#bankId.form__select").append(select_div);
+                    }
+                    else {
+                    }
+                },
+                error: function (returnval) {
+                    console.log("Na error be this o...!!!");
+                }
+            });
+        }
+
+        function getStates() {
+            let baseUrl = "https://localhost:44382/api/StatesTables";
+            $.ajax({
+                url: baseUrl,
+                type: 'GET',
+                dataType: "json",
+                success: function (response) {
+                    let select_div = "";
+                    if (response) {
+                        $.each(response, function (key, value) {
+                            select_div += "<option value='" + value.stateId + "'>" + value.stateName + "</option>";
+                            //"<ul class='list'><li data-value='"+ value.bankId +"' class='option selected focus'>"+ value.bankId +"</li></ul>";
+                        });
+                        $("select#stateId.form__select").append(select_div);
+                    }
+                    else {
+                    }
+                },
+                error: function (returnval) {
+                    console.log("Na error be this o...!!!");
+                }
+            });
+        }
+
     </script>
 }
