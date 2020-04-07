@@ -119,12 +119,22 @@
                                             <div class="col-lg-6">
                                                 <input class="form__field" type="text" id="employerRcNoOrBrNo" placeholder="Employer RcNo Or BrNo" />
                                             </div>
-                                            <div class="col-lg-6">
-                                                <input class="form__field datepicker" type="text" id="dateOfEmployment" placeholder="Date of Employment" />
+                                            @*<div class="col-lg-6">
+                                                <input class="form__field " type="text" id="" placeholder="Date of Employment" />
+                                            </div>*@
+
+                                            <div class="col-lg-6 input-group date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dateOfEmployment" data-link-format="yyyy-mm-dd">
+                                                <input class="form__field " type="text" placeholder="Date of Employment" value="" readonly />
+                                                <span class="input-group-addon"dateOfEmployment><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <input class="form__field datepicker" type="text" id="dateOfLeaving1" placeholder="Date of leaving" />
+                                            <input type="hidden" id="dateOfEmployment" value="" />
+
+                                            <div class="col-lg-6 input-group date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dateOfLeaving1" data-link-format="yyyy-mm-dd">
+                                                <input class="form__field " type="text" placeholder="Date of leaving" value="" readonly />
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
+                                            <input type="hidden" id="dateOfLeaving1" value="" />
+
                                             <div class="col-lg-6">
                                                 <input class="form__field" type="text" id="avgMonthlySalaryForSixMonths1" placeholder="Avg. 6 Months Salary" />
                                             </div>
@@ -162,16 +172,23 @@
                                                     <option value="false">No</option>
                                                 </select>
                                             </div>
+                                            <div class="col-lg-6 input-group date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="startDateOfBusiness" data-link-format="yyyy-mm-dd">
+                                                <input class="form__field " type="text" placeholder="Start Date of Business" value="" readonly />
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                            <input type="hidden" id="startDateOfBusiness" value="" />
 
-                                            <div class="col-lg-6">
-                                                <input class="form__field" type="text" id="startDateOfBusiness" placeholder="Start Date of Business" />
+                                            <div class="col-lg-6 input-group date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="closeDateOfBusiness" data-link-format="yyyy-mm-dd">
+                                                <input class="form__field " type="text" placeholder="Close Date of Business" value="" readonly />
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <input class="form__field datepicker" type="text" id="closeDateOfBusiness" placeholder="Close Date of Business" />
+                                            <input type="hidden" id="closeDateOfBusiness" value="" />
+
+                                            <div class="col-lg-6 input-group date form_date" data-date="" data-date-format="dd MM yyyy" data-link-field="dateOfLeaving" data-link-format="yyyy-mm-dd">
+                                                <input class="form__field " type="text" placeholder="Date of Leaving" value="" readonly />
+                                                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <input class="form__field datepicker" type="text" id="dateOfLeaving" placeholder="Date of Leaving" />
-                                            </div>
+                                            <input type="hidden" id="dateOfLeaving" value="" />
                                             <div class="col-lg-6">
                                                 <input class="form__field" type="text" id="avgMonthlySalaryForSixMonths" placeholder="Avg. 6 Months Salary" />
                                             </div>
@@ -378,15 +395,6 @@
             // Get the createdon date
             var date = Date.now();
             const formatedDate = dayjs(date).format("YYYY-MM-DD");
-            //$(function () {
-            //    $(".datepicker").datepicker({
-            //        dateFormat: 'yy-mm-dd',
-            //        changeMonth: true,
-            //        changeYear: true,
-            //        yearRange: '-100y:c+nn',
-            //        maxDate: '-1d'
-            //    });
-            //});
 
             $("#gotoStep2").on('click', function () {
 
@@ -650,6 +658,15 @@
                 }
             });
         }
-
+	    $('.form_date').datetimepicker({
+            language:  'fr',
+            weekStart: 1,
+            todayBtn:  1,
+		    autoclose: 1,
+		    todayHighlight: 1,
+		    startView: 2,
+		    minView: 2,
+		    forceParse: 0
+        });
     </script>
 }
