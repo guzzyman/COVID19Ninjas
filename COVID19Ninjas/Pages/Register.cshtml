@@ -32,6 +32,12 @@
                     <form class="form checkout-form" action="javascript:void(0);">
                         <div class="row">
                             <div class="col-lg-12 col-xl-12">
+                                <ul id="progressbar" style="width:100%;">
+                                    <li class="active">Personal Information</li>
+                                    <li>Employment Information</li>
+                                    <li>Indemnity Agreement</li>
+                                    <li>Validation/Thank you</li>
+                                </ul>
                                 <div class="form__fieldset" id="PersonalInformation">
                                     <h2 class="form__title">Personal Information</h2>
                                     <div class="row offset-30">
@@ -50,18 +56,14 @@
                                         <div class="col-lg-6">
                                             <input class="form__field" type="email" id="email" placeholder="Email Address *" />
                                         </div>
-                                        <div class="col-lg-6">
-                                            <select class="nice-select form__select" id="bankId">
-                                                <option>Bank</option>
-                                            </select>
+                                        <div id="bankSelectDiv" class="col-lg-6">
+                                            <div id="bankId" style="display:none;"></div>
                                         </div>
                                         <div class="col-lg-6">
                                             <input class="form__field" type="text" id="accountNumber" placeholder="Account Number *" />
                                         </div>
-                                        <div class="col-lg-6">
-                                            <select class="form__select" id="stateId">
-                                                <option>State</option>
-                                            </select>
+                                        <div id="stateSelectDiv" class="col-lg-6">
+                                            <div id="stateId" style="display:none;"></div>
                                         </div>
                                         <div class="col-lg-6">
                                             <select class="form__select" id="identityDocumentType">
@@ -118,10 +120,10 @@
                                                 <input class="form__field" type="text" id="employerRcNoOrBrNo" placeholder="Employer RcNo Or BrNo" />
                                             </div>
                                             <div class="col-lg-6">
-                                                <input class="form__field" type="text" id="dateOfEmployment" placeholder="Date of Employment" />
+                                                <input class="form__field datepicker" type="text" id="dateOfEmployment" placeholder="Date of Employment" />
                                             </div>
                                             <div class="col-lg-6">
-                                                <input class="form__field" type="text" id="dateOfLeaving1" placeholder="Date of leaving" />
+                                                <input class="form__field datepicker" type="text" id="dateOfLeaving1" placeholder="Date of leaving" />
                                             </div>
                                             <div class="col-lg-6">
                                                 <input class="form__field" type="text" id="avgMonthlySalaryForSixMonths1" placeholder="Avg. 6 Months Salary" />
@@ -160,14 +162,15 @@
                                                     <option value="false">No</option>
                                                 </select>
                                             </div>
+
                                             <div class="col-lg-6">
                                                 <input class="form__field" type="text" id="startDateOfBusiness" placeholder="Start Date of Business" />
                                             </div>
                                             <div class="col-lg-6">
-                                                <input class="form__field" type="text" id="closeDateOfBusiness" placeholder="Close Date of Business" />
+                                                <input class="form__field datepicker" type="text" id="closeDateOfBusiness" placeholder="Close Date of Business" />
                                             </div>
                                             <div class="col-lg-6">
-                                                <input class="form__field" type="text" id="dateOfLeaving" placeholder="Date of Leaving" />
+                                                <input class="form__field datepicker" type="text" id="dateOfLeaving" placeholder="Date of Leaving" />
                                             </div>
                                             <div class="col-lg-6">
                                                 <input class="form__field" type="text" id="avgMonthlySalaryForSixMonths" placeholder="Avg. 6 Months Salary" />
@@ -237,7 +240,9 @@
                                                 <p>
                                                     Should you decide to key into the Covid-19 stimulus package, you may login to
                                                     your profile to continue. Kindly remember your safety and the safety of others
-                                                    in whatever you do. <p><strong>#StayHome, #KeepSocialDistance</strong>.
+                                                    in whatever you do.
+                                                <p>
+                                                    <strong>#StayHome, #KeepSocialDistance</strong>.
                                                 </p>
                                             </div>
                                         </div>
@@ -373,6 +378,15 @@
             // Get the createdon date
             var date = Date.now();
             const formatedDate = dayjs(date).format("YYYY-MM-DD");
+            //$(function () {
+            //    $(".datepicker").datepicker({
+            //        dateFormat: 'yy-mm-dd',
+            //        changeMonth: true,
+            //        changeYear: true,
+            //        yearRange: '-100y:c+nn',
+            //        maxDate: '-1d'
+            //    });
+            //});
 
             $("#gotoStep2").on('click', function () {
 
@@ -412,6 +426,7 @@
                     // Proceed to step 2
                     $("#PersonalInformation").hide();
                     $("#EmploymentInformation").show();
+                    $("#progressbar li").eq(1).addClass("active");
                 }
             });
 
@@ -419,6 +434,7 @@
                 // Go back to step 1
                 $("#EmploymentInformation").hide();
                 $("#PersonalInformation").show();
+                $("#progressbar li").eq(1).removeClass("active");
             });
 
             $("#IsEmploymentStatus").on('change', function () {
@@ -554,6 +570,7 @@
                 // ThankyouPage
                 $("#IndemnityAgreement").hide();
                 $("#ThankyouPage").show();
+                $("#progressbar li").eq(3).addClass("active");
             });
         });
 
@@ -572,6 +589,7 @@
                 success: function (response) {
                     $("#EmploymentInformation").hide();
                     $("#IndemnityAgreement").show();
+                    $("#progressbar li").eq(2).addClass("active");
                 },
                 error: function (returnval) {
                     console.log("Na error be this o...!!!");
@@ -587,12 +605,15 @@
                 dataType: "json",
                 success: function (response) {
                     let select_div = "";
+                    let select_div_append = '<div class="nice-select form__select" tabindex="0"><span class="current">Bank</span><ul class="list"><li data-value="Bank" class="option selected focus">Bank</li>';
                     if (response) {
                         $.each(response, function (key, value) {
                             select_div += "<option value='" + value.bankId + "'>" + value.bankName + "</option>";
-                            //"<ul class='list'><li data-value='"+ value.bankId +"' class='option selected focus'>"+ value.bankId +"</li></ul>";
+                            select_div_append += "<li data-value='" + value.bankId + "' class='option'>" + value.bankName + "</li>";
                         });
-                        $("select#bankId.form__select").append(select_div);
+                        $("#bankId").append(select_div);
+                        select_div_append += "</ul></div>";
+                        $("#bankSelectDiv").append(select_div_append);
                     }
                     else {
                     }
@@ -611,12 +632,15 @@
                 dataType: "json",
                 success: function (response) {
                     let select_div = "";
+                    let select_div_append = '<div class="nice-select form__select" tabindex="0"><span class="current">State</span><ul class="list"><li data-value="State" class="option selected focus">State</li>';
                     if (response) {
                         $.each(response, function (key, value) {
                             select_div += "<option value='" + value.stateId + "'>" + value.stateName + "</option>";
-                            //"<ul class='list'><li data-value='"+ value.bankId +"' class='option selected focus'>"+ value.bankId +"</li></ul>";
+                            select_div_append += "<li data-value='" + value.stateId + "' class='option'>" + value.stateName + "</li>";
                         });
-                        $("select#stateId.form__select").append(select_div);
+                        $("#stateId").append(select_div);
+                        select_div_append += "</ul></div>";
+                        $("#stateSelectDiv").append(select_div_append);
                     }
                     else {
                     }
