@@ -193,7 +193,7 @@
                                                 <input class="form__field" type="text" id="avgMonthlySalaryForSixMonths" placeholder="Avg. 6 Months Salary" />
                                             </div>
                                         </div>
-                                        <div class="col-12" style="margin-bottom:20px !important;">
+                                        <div id="divBackToStep1gotoStep3" class="col-12" style="margin-bottom:20px !important; display:none;">
                                             <button class="form__submit" type="submit" id="backToStep1">Previous</button>
                                             <button class="form__submit" type="submit" id="gotoStep3">Next</button>
                                         </div>
@@ -242,7 +242,8 @@
                                             </div>
                                         </div>
                                         <div class="col-12" style="margin-bottom:20px !important;">
-                                            <button class="form__submit" type="submit" id="sendEmailActivationLink">Proceed</button>
+                                            @*<button class="form__submit" type="submit" id="sendEmailActivationLink">Proceed</button>*@
+                                            <a class="form__submit" asp-controller="client" asp-action="dashboard"><span>Proceed</span></a>
                                             <button class="form__submit" type="submit" id="gotoStep4">Cancel</button>
                                         </div>
                                     </div>
@@ -455,6 +456,7 @@
 
                     $("#selfEmployedWorkersDetails").hide();
                     $("#salaryWorkersDetails").show();
+                    $("#divBackToStep1gotoStep3").show();
                     $("#empCategory").html("(salary worker)");
                     $("#areYouCurrentlyInEmployment option:selected").val("true");
                     $("#areYouCurrentlyInEmployment option:selected").text("Yes");
@@ -467,6 +469,7 @@
 
                     $("#salaryWorkersDetails").hide();
                     $("#selfEmployedWorkersDetails").show();
+                    $("#divBackToStep1gotoStep3").show();
                     $("#empCategory").html("(self-employed worker)");
                 }
             });
@@ -570,9 +573,9 @@
                 }
             });
 
-            $("#sendEmailActivationLink").on('click', function () {
-                // Send activation link
-            });
+            //$("#sendEmailActivationLink").on('click', function () {
+            //    // Send activation link
+            //});
 
             $("#gotoStep4").on('click', function () {
                 // ThankyouPage
@@ -598,6 +601,9 @@
                     $("#EmploymentInformation").hide();
                     $("#IndemnityAgreement").show();
                     $("#progressbar li").eq(2).addClass("active");
+                    // Add the user object to local storage
+                    let userLocalStorageObj = appData.user;
+                    localStorage.setItem('userObj', JSON.stringify(userLocalStorageObj));
                 },
                 error: function (returnval) {
                     console.log("Na error be this o...!!!");
